@@ -8,9 +8,61 @@
 ## Что это за проект
 
 **lists** — мобильное приложение (KMP + Compose Multiplatform) для iOS и Android.
+Совместные списки любого типа: покупки, вещи в поездку, мероприятия, переезд.
+Ключевая фишка: каждый участник видит, кто что взял, в реальном времени.
+
 Разрабатывается по паттернам, принятым в репозитории [teplitsa](https://github.com/SWTec/teplitsa).
 
 Репозиторий: `https://github.com/DeSokolov/my-projects`, папка `lists/`.
+
+---
+
+## Текущее состояние проекта (май 2026)
+
+### Версии
+- Kotlin: 2.1.0
+- Compose Multiplatform: 1.7.3
+- AGP: 8.7.3
+- KSP: 2.1.0-1.0.29
+- Koin: 4.0.0
+- gitlive Firebase SDK: 2.1.0
+- Room KMP: 2.7.0 (объявлено, не реализовано)
+- Gradle: 8.10.2
+
+### Firebase и stub-режим
+- `USE_STUBS = true` в `di/AppModule.kt` — приложение работает без Firebase
+- `StubListRepository` и `StubUserRepository` — полностью рабочие in-memory реализации
+- Stub-пользователь: `id = "stub-user"`, `displayName = "Денис"`, `email = "dev4@swtlm.com"`
+- Чтобы подключить Firebase: добавить `GoogleService-Info.plist` в `iosApp/`, установить `USE_STUBS = false`
+
+### Firebase CocoaPods (важно)
+- Firebase поды объявлены с `linkOnly = true` в `composeApp/build.gradle.kts`
+- При изменении `cocoapods {}` блока нужно: `./gradlew :composeApp:generateDummyFramework`, затем `pod install`
+- Podfile находится в `mobile/iosApp/Podfile`
+- `iOSApp.swift` проверяет наличие `GoogleService-Info.plist` перед `FirebaseApp.configure()`
+
+### gitlive Firebase SDK особенности
+- FilterBuilder DSL: использовать `contains` (НЕ `arrayContains`) для array-contains запросов
+- Пример: `"memberIds" contains userId`
+
+### Навигация
+- State-based, без библиотек
+- `Screen` — sealed interface в `ui/nav/Screen.kt`
+- `Screen.Lists` — главный экран
+- `Screen.ListDetail(listId, listTitle, listType, userId, userName)` — детали списка
+
+### Что реализовано в UI
+- Экран списков: создание, отображение карточек, переход в детали
+- Экран деталей:
+  - Взять / Снять пункт
+  - Отметить выполненным (чекбокс)
+  - Удалить пункт свайпом влево
+  - Умные подсказки при добавлении (фильтр по `ListType`)
+  - Поиск по названию (иконка в TopAppBar)
+  - Фильтр «Все / Мои» (FilterChip)
+  - Поделиться списком (копирует `lists://join/{listId}`)
+  - Участники (BottomSheet из меню ⋮)
+  - Уведомления вкл/выкл (в меню ⋮, real push — после Firebase)
 
 ---
 

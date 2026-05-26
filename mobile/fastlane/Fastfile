@@ -1,0 +1,44 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a beta build to TestFlight"
+  lane :beta do
+    match(type: "appstore")
+    build_app(
+      scheme: "iosApp",
+      export_method: "app-store"
+    )
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+  end
+
+  desc "Upload metadata to App Store"
+  lane :upload_metadata do
+    deliver(
+      skip_binary_upload: true,
+      force: true
+    )
+  end
+end
+
+platform :android do
+  desc "Push a beta build to Google Play Internal Testing"
+  lane :beta do
+    gradle(
+      task: "bundle",
+      build_type: "Release",
+      project_dir: ".."
+    )
+    upload_to_play_store(
+      track: "internal",
+      aab: "../composeApp/build/outputs/bundle/release/composeApp-release.aab"
+    )
+  end
+
+  desc "Upload metadata to Google Play"
+  lane :upload_metadata do
+    upload_to_play_store(
+      skip_upload_apk: true,
+      skip_upload_aab: true
+    )
+  end
+end

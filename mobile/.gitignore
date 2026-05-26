@@ -1,0 +1,26 @@
+.gradle
+.idea
+.DS_Store
+build/
+*.jks
+*.keystore
+local.properties
+google-services.json
+GoogleService-Info.plist
+.env
+*.iml
+xcuserdata/
+*.xcworkspace/xcuserdata/
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# CocoaPods
+iosApp/Pods/
+iosApp/*.xcworkspace
+!iosApp/*.xcodeproj/project.xcworkspace
+
+# Gemfile
+.bundle/
+vendor/
