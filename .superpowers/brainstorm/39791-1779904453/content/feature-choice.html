@@ -1,0 +1,49 @@
+<h2>Какую фичу делаем первой?</h2>
+<p class="subtitle">Обе не требуют Firebase и работают со stub-данными прямо сейчас</p>
+
+<div class="options">
+  <div class="option" data-choice="templates" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>021 — Шаблоны списков</h3>
+      <p>Готовые наборы пунктов при создании нового списка. Типы уже есть (SHOPPING, TRAVEL, EVENT, MOVING), нужно добавить данные и UI выбора.</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Плюсы</h4><ul>
+          <li>~3–5 часов работы</li>
+          <li>Всё в одном месте (диалог создания)</li>
+          <li>ListType уже реализован</li>
+          <li>Нет новых экранов</li>
+        </ul></div>
+        <div class="cons"><h4>Минусы</h4><ul>
+          <li>Меньше UX-ценности до публикации</li>
+          <li>Premium-функция — нужен RevenueCat позже</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="onboarding" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>018 — Онбординг</h3>
+      <p>2–3 слайда при первом запуске: объясняет механику «Кто что берёт», кнопка «Пропустить», переход к спискам.</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Плюсы</h4><ul>
+          <li>Высокая UX-ценность</li>
+          <li>Нужен перед публикацией</li>
+          <li>Чистая Compose UI задача</li>
+          <li>Со stubs работает полностью</li>
+        </ul></div>
+        <div class="cons"><h4>Минусы</h4><ul>
+          <li>~4–6 часов (новые экраны + анимации)</li>
+          <li>Нужен первый запуск через DataStore</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;padding:16px;background:rgba(255,255,255,0.05);border-radius:8px">
+  <span class="label">Рекомендация агента</span>
+  <p style="margin-top:8px">Начать с <strong>021 — Шаблоны</strong>: минимум времени, расширяет уже рабочий флоу создания списка, виден результат сразу.</p>
+</div>

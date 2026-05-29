@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Settings Screen — Lists App</title>
+<style>
+  body {
+    background: #e0dce8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 20px;
+    font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+
+  h2 {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    color: #2a2040;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #6B6878;
+    margin-bottom: 20px;
+  }
+
+  .phone-wrap { text-align: center; }
+  .label { font-size: 11px; color: #555; margin-top: 8px; }
+
+  .phone {
+    border-radius: 52px;
+    border: 8px solid #1a1a1a;
+    width: 220px;
+    height: 460px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35), inset 0 0 0 1px #333;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .dynamic-island {
+    width: 70px; height: 22px;
+    background: #000;
+    border-radius: 20px;
+    margin: 10px auto 0;
+    flex-shrink: 0;
+  }
+
+  /* ───── WHITE THEME ───── */
+  .white { background: #F8F9FF; color: #1B1B21; }
+  .white .topbar { background: #F8F9FF; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .white .section-header { color: #4052B5; }
+  .white .row { background: #F8F9FF; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .white .row-label { color: #1B1B21; }
+  .white .row-sub { color: #6B6878; }
+  .white .text-field { background: #E3E1EC; color: #1B1B21; border: none; }
+  .white .switch-on { background: #4052B5; }
+  .white .switch-off { background: #C4BCDA; }
+  .white .circle-white { background: #F8F9FF; border: 2px solid #C4BCDA; }
+  .white .circle-black { background: #111318; }
+  .white .circle-pink  { background: #FFD6E7; border: 2px solid #F4A5C0; }
+  .white .check { color: #4052B5; }
+
+  /* ───── BLACK THEME ───── */
+  .black { background: #111318; color: #E6E0E9; }
+  .black .topbar { background: #1C1B1F; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .black .section-header { color: #BBC4FF; }
+  .black .row { background: #111318; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .black .row-label { color: #E6E0E9; }
+  .black .row-sub { color: #928F9A; }
+  .black .text-field { background: #2B2930; color: #E6E0E9; border: none; }
+  .black .switch-on { background: #BBC4FF; }
+  .black .switch-off { background: #49454F; }
+  .black .circle-white { background: #F8F9FF; border: 2px solid #928F9A; }
+  .black .circle-black { background: #111318; border: 2px solid #BBC4FF; }
+  .black .circle-pink  { background: #FFD6E7; border: 2px solid #F4A5C0; }
+  .black .check { color: #BBC4FF; }
+
+  /* ───── PINK THEME ───── */
+  .pink { background: #FFF8F9; color: #22191C; }
+  .pink .topbar { background: #FFF8F9; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .pink .section-header { color: #B5346B; }
+  .pink .row { background: #FFF8F9; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .pink .row-label { color: #22191C; }
+  .pink .row-sub { color: #7D5260; }
+  .pink .text-field { background: #F8D7E3; color: #22191C; border: none; }
+  .pink .switch-on { background: #B5346B; }
+  .pink .switch-off { background: #EAB8CC; }
+  .pink .circle-white { background: #F8F9FF; border: 2px solid #EAB8CC; }
+  .pink .circle-black { background: #111318; }
+  .pink .circle-pink  { background: #FFD6E7; border: 2px solid #B5346B; }
+  .pink .check { color: #B5346B; }
+
+  /* Shared components */
+  .topbar {
+    padding: 8px 14px;
+    display: flex; align-items: center; gap: 6px;
+    flex-shrink: 0;
+  }
+  .back-icon { font-size: 20px; line-height: 1; width: 28px; text-align: center; }
+  .topbar-title { font-size: 17px; font-weight: 600; flex: 1; }
+
+  .section-header {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 12px 16px 4px;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  .row-text { flex: 1; }
+  .row-label { font-size: 15px; font-weight: 500; }
+  .row-sub { font-size: 12px; margin-top: 1px; }
+
+  .text-field {
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 16px 12px;
+    width: calc(100% - 32px);
+    display: block;
+  }
+
+  /* Switch */
+  .switch {
+    width: 38px; height: 22px;
+    border-radius: 11px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .switch::after {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    background: white;
+    border-radius: 50%;
+    top: 2px; right: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .switch.off::after { right: auto; left: 2px; }
+
+  /* Color circles row */
+  .theme-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 12px 16px 16px;
+    align-items: flex-start;
+  }
+  .theme-option { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .color-circle {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700;
+  }
+  .theme-name { font-size: 10px; text-align: center; }
+</style>
+</head>
+<body>
+
+<h2>Экран Настройки — три темы</h2>
+<p class="subtitle">Цветные кружки · выбранная тема с галочкой · секции: Профиль / Оформление / Уведомления</p>
+
+<!-- WHITE -->
+<div class="phone-wrap">
+  <div class="phone white">
+    <div class="dynamic-island"></div>
+    <div class="topbar white">
+      <span class="back-icon">‹</span>
+      <span class="topbar-title">Настройки</span>
+    </div>
+
+    <div class="section-header white">Профиль</div>
+    <div class="row white" style="padding-bottom:4px">
+      <div class="row-text">
+        <div class="row-label">Имя</div>
+        <div class="row-sub">Как тебя видят в списках</div>
+      </div>
+    </div>
+    <input class="text-field white" type="text" value="Денис" readonly>
+
+    <div class="section-header white">Оформление</div>
+    <div class="theme-row">
+      <div class="theme-option">
+        <div class="color-circle circle-white white"><span class="check">✓</span></div>
+        <div class="theme-name white" style="color:#1B1B21">Белая</div>
+      </div>
+      <div class="theme-option">
+        <div class="color-circle circle-black white"></div>
+        <div class="theme-name white" style="color:#1B1B21">Чёрная</div>
+      </div>
+      <div class="theme-option">
+        <div class="color-circle circle-pink white"></div>
+        <div class="theme-name white" style="color:#1B1B21">Розовая</div>
+      </div>
+    </div>
+
+    <div class="section-header white">Уведомления</div>
+    <div class="row white">
+      <div class="row-text">
+        <div class="row-label">Уведомления</div>
+        <div class="row-sub">Когда кто-то берёт пункт</div>
+      </div>
+      <div class="switch switch-on white" style="background:#4052B5"></div>
+    </div>
+  </div>
+  <p class="label">⚪ Белая тема (текущая)</p>
+</div>
+
+<!-- BLACK -->
+<div class="phone-wrap">
+  <div class="phone black">
+    <div class="dynamic-island"></div>
+    <div class="topbar black">
+      <span class="back-icon" style="color:#E6E0E9">‹</span>
+      <span class="topbar-title" style="color:#E6E0E9">Настройки</span>
+    </div>
+
+    <div class="section-header black">Профиль</div>
+    <div class="row black" style="padding-bottom:4px">
+      <div class="row-text">
+        <div class="row-label">Имя</div>
+        <div class="row-sub">Как тебя видят в списках</div>
+      </div>
+    </div>
+    <input class="text-field black" type="text" value="Денис" readonly>
+
+    <div class="section-header black">Оформление</div>
+    <div class="theme-row">
+      <div class="theme-option">
+        <div class="color-circle circle-white black"></div>
+        <div class="theme-name" style="color:#928F9A">Белая</div>
+      </div>
+      <div class="theme-option">
+        <div class="color-circle circle-black black"><span class="check" style="color:#BBC4FF">✓</span></div>
+        <div class="theme-name" style="color:#E6E0E9">Чёрная</div>
+      </div>
+      <div class="theme-option">
+        <div class="color-circle circle-pink black"></div>
+        <div class="theme-name" style="color:#928F9A">Розовая</div>
+      </div>
+    </div>
+
+    <div class="section-header black">Уведомления</div>
+    <div class="row black">
+      <div class="row-text">
+        <div class="row-label">Уведомления</div>
+        <div class="row-sub">Когда кто-то берёт пункт</div>
+      </div>
+      <div class="switch" style="background:#BBC4FF;border-radius:11px;width:38px;height:22px;position:relative;flex-shrink:0">
+        <span style="position:absolute;width:18px;height:18px;background:white;border-radius:50%;top:2px;right:2px;display:block;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></span>
+      </div>
+    </div>
+  </div>
+  <p class="label">⚫ Чёрная тема</p>
+</div>
+
+<!-- PINK -->
+<div class="phone-wrap">
+  <div class="phone pink">
+    <div class="dynamic-island"></div>
+    <div class="topbar pink">
+      <span class="back-icon" style="color:#22191C">‹</span>
+      <span class="topbar-title" style="color:#22191C">Настройки</span>
+    </div>
+
+    <div class="section-header pink">Профиль</div>
+    <div class="row pink" style="padding-bottom:4px">
+      <div class="row-text">
+        <div class="row-label">Имя</div>
+        <div class="row-sub">Как тебя видят в списках</div>
+      </div>
+    </div>
+    <input class="text-field pink" type="text" value="Денис" readonly>
+
+    <div class="section-header pink">Оформление</div>
+    <div class="theme-row">
+      <div class="theme-option">
+        <div class="color-circle circle-white pink"></div>
+        <div class="theme-name" style="color:#7D5260">Белая</div>
+      </div>
+      <div class="theme-option">
+        <div class="color-circle circle-black pink"></div>
+        <div class="theme-name" style="color:#7D5260">Чёрная</div>
+      </div>
+      <div class="theme-option">
+        <div class="color-circle circle-pink pink"><span class="check" style="color:#B5346B">✓</span></div>
+        <div class="theme-name" style="color:#22191C">Розовая</div>
+      </div>
+    </div>
+
+    <div class="section-header pink">Уведомления</div>
+    <div class="row pink">
+      <div class="row-text">
+        <div class="row-label">Уведомления</div>
+        <div class="row-sub">Когда кто-то берёт пункт</div>
+      </div>
+      <div class="switch" style="background:#B5346B;border-radius:11px;width:38px;height:22px;position:relative;flex-shrink:0">
+        <span style="position:absolute;width:18px;height:18px;background:white;border-radius:50%;top:2px;right:2px;display:block;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></span>
+      </div>
+    </div>
+  </div>
+  <p class="label">🩷 Розовая тема</p>
+</div>
+
+</body>
+</html>

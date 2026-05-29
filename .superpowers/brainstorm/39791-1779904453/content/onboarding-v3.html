@@ -1,0 +1,282 @@
+<style>
+  .phone {
+    background: #F8F9FF;
+    border-radius: 28px;
+    border: 2px solid #C7C5D0;
+    width: 178px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    font-family: 'Roboto', system-ui, sans-serif;
+    color: #1B1B21;
+    display: flex;
+    flex-direction: column;
+  }
+  .notch {
+    width: 36px; height: 5px;
+    background: #C7C5D0; border-radius: 3px;
+    margin: 8px auto 0;
+  }
+  .skip {
+    font-size: 9px; color: #4052B5;
+    text-align: right; padding: 4px 12px 2px;
+  }
+  .topbar {
+    background: #F8F9FF;
+    padding: 8px 4px 6px 8px;
+    display: flex; align-items: center; gap: 2px;
+    font-size: 13px; font-weight: 600;
+    border-bottom: 1px solid #E3E1EC;
+  }
+  .topbar-icons { margin-left:auto; display:flex; align-items:center; }
+  .topbar-icon { font-size:13px; color:#46464F; padding:0 2px; }
+
+  /* ListCard — точно как в коде: Box(48dp)+emoji, затем Column */
+  .list-card {
+    background: white;
+    border-radius: 16px;
+    margin: 4px 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    gap: 0;
+  }
+  .list-emoji-box {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .list-info { padding-left: 8px; }
+  .list-title { font-size: 12px; font-weight: 600; color: #1B1B21; }
+  .list-type  { font-size: 10px; color: #4052B5; }
+
+  /* FilterChip row */
+  .filter-row { display:flex; gap:6px; padding: 5px 10px; }
+  .chip {
+    border: 1px solid #777680; border-radius: 8px;
+    padding: 2px 8px; font-size: 10px; color: #1B1B21;
+  }
+  .chip.selected { background: #DDE1FF; border-color: #4052B5; color: #000F60; }
+
+  /* ItemRow — точно как в коде: Row { Checkbox | Column(weight=1) | TextButton? } */
+  .item-row {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px 5px 6px;
+  }
+  .m3-checkbox {
+    width: 16px; height: 16px;
+    border: 2px solid #777680; border-radius: 2px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .m3-checkbox.checked { background: #4052B5; border-color: #4052B5; }
+  .m3-checkbox.checked::after { content:'✓'; color:white; font-size:10px; font-weight:700; }
+
+  .item-col {
+    flex: 1;
+    padding: 0 4px 0 6px;
+    min-width: 0;
+  }
+  .item-title { font-size: 11px; color: #1B1B21; line-height: 1.3; }
+  .item-title.done { text-decoration: line-through; color: #777680; }
+  .item-claimed { font-size: 9px; color: #4052B5; }
+
+  /* TextButton — крайний правый, за пределами Column */
+  .text-btn {
+    font-size: 10px; color: #4052B5;
+    font-weight: 500; white-space: nowrap;
+    padding: 2px 0 2px 4px;
+    flex-shrink: 0;
+  }
+
+  .divider { height: 1px; background: #E3E1EC; margin-left: 38px; }
+
+  .slide-title { font-size: 13px; font-weight: 700; text-align:center; padding: 8px 10px 2px; }
+  .slide-sub   { font-size: 10px; color:#46464F; text-align:center; padding: 0 10px 6px; line-height:1.4; }
+  .dots { display:flex; justify-content:center; gap:5px; padding: 4px 0 8px; }
+  .dot { width:6px; height:6px; background:#C7C5D0; border-radius:3px; }
+  .dot.active { width:20px; background:#4052B5; }
+  .fab {
+    background:#4052B5; color:white;
+    border-radius:16px; padding:7px 12px;
+    font-size:11px; font-weight:600;
+    text-align:center; margin:0 10px 12px;
+  }
+</style>
+
+<h2>Онбординг — точно по коду</h2>
+<p class="subtitle">ListCard: Box(48dp)+emoji · ItemRow: Checkbox | Column | TextButton (справа) · HorizontalDivider</p>
+
+<div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;padding:16px 0">
+
+  <!-- Слайд 1: ListsScreen -->
+  <div style="text-align:center">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="skip">Пропустить</div>
+      <div class="topbar">Мои списки</div>
+
+      <div style="height:6px"></div>
+      <div class="list-card">
+        <div class="list-emoji-box">🛒</div>
+        <div class="list-info">
+          <div class="list-title">Продукты</div>
+          <div class="list-type">Покупки</div>
+        </div>
+      </div>
+      <div class="list-card">
+        <div class="list-emoji-box">🧳</div>
+        <div class="list-info">
+          <div class="list-title">На море</div>
+          <div class="list-type">Поездка</div>
+        </div>
+      </div>
+      <div class="list-card">
+        <div class="list-emoji-box">🎉</div>
+        <div class="list-info">
+          <div class="list-title">День рождения</div>
+          <div class="list-type">Мероприятие</div>
+        </div>
+      </div>
+      <div style="height:4px"></div>
+
+      <div class="slide-title">Списки для всего</div>
+      <div class="slide-sub">Покупки, поездки, события — всё в одном приложении</div>
+      <div class="dots">
+        <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <div class="fab">Далее</div>
+    </div>
+    <p style="font-size:11px;color:#46464F;margin-top:8px">Слайд 1 — Списки</p>
+  </div>
+
+  <!-- Слайд 2: ListDetailScreen с ItemRow -->
+  <div style="text-align:center">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="skip">Пропустить</div>
+      <div class="topbar">
+        <span style="color:#46464F;font-size:14px">←</span>
+        <span style="flex:1;padding-left:4px">Продукты</span>
+        <div class="topbar-icons">
+          <span class="topbar-icon">⌕</span>
+          <span class="topbar-icon">⎙</span>
+          <span class="topbar-icon">⋮</span>
+        </div>
+      </div>
+      <div class="filter-row">
+        <div class="chip selected">Все</div>
+        <div class="chip">Мои</div>
+      </div>
+
+      <!-- Row { Checkbox | Column(weight=1) | TextButton } -->
+      <div class="item-row">
+        <div class="m3-checkbox"></div>
+        <div class="item-col">
+          <div class="item-title">Молоко</div>
+        </div>
+        <div class="text-btn">Взять</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="item-row">
+        <div class="m3-checkbox"></div>
+        <div class="item-col">
+          <div class="item-title">Хлеб</div>
+          <div class="item-claimed">→ Маша</div>
+        </div>
+        <div class="text-btn">Снять</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="item-row">
+        <div class="m3-checkbox"></div>
+        <div class="item-col">
+          <div class="item-title">Яблоки</div>
+        </div>
+        <div class="text-btn">Взять</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="item-row">
+        <div class="m3-checkbox"></div>
+        <div class="item-col">
+          <div class="item-title">Сыр</div>
+          <div class="item-claimed">→ Денис</div>
+        </div>
+        <!-- claimed by another — нет кнопки -->
+      </div>
+      <div class="divider"></div>
+
+      <div class="slide-title">Кто что берёт</div>
+      <div class="slide-sub">Нажми «Взять» — все участники сразу увидят</div>
+      <div class="dots">
+        <div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+      </div>
+      <div class="fab">Далее</div>
+    </div>
+    <p style="font-size:11px;color:#46464F;margin-top:8px">Слайд 2 — Механика</p>
+  </div>
+
+  <!-- Слайд 3: всё выполнено -->
+  <div style="text-align:center">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="topbar">
+        <span style="color:#46464F;font-size:14px">←</span>
+        <span style="flex:1;padding-left:4px">Продукты</span>
+      </div>
+      <div class="filter-row">
+        <div class="chip selected">Все</div>
+        <div class="chip">Мои</div>
+      </div>
+
+      <div class="item-row">
+        <div class="m3-checkbox checked"></div>
+        <div class="item-col">
+          <div class="item-title done">Молоко</div>
+          <div class="item-claimed">→ Денис</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="item-row">
+        <div class="m3-checkbox checked"></div>
+        <div class="item-col">
+          <div class="item-title done">Хлеб</div>
+          <div class="item-claimed">→ Маша</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="item-row">
+        <div class="m3-checkbox checked"></div>
+        <div class="item-col">
+          <div class="item-title done">Яблоки</div>
+          <div class="item-claimed">→ Петя</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="item-row">
+        <div class="m3-checkbox checked"></div>
+        <div class="item-col">
+          <div class="item-title done">Сыр</div>
+          <div class="item-claimed">→ Денис</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="slide-title">Всё куплено!</div>
+      <div class="slide-sub">Поделись списком — и никто ничего не забудет</div>
+      <div class="dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+      </div>
+      <div class="fab">Создать первый список</div>
+    </div>
+    <p style="font-size:11px;color:#46464F;margin-top:8px">Слайд 3 — Финал</p>
+  </div>
+
+</div>

@@ -1,0 +1,261 @@
+<style>
+  body { background: #e0dce8; }
+  .phone {
+    background: #F5F2FA;
+    border-radius: 52px;
+    border: 8px solid #1a1a1a;
+    width: 200px;
+    min-height: 420px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35), inset 0 0 0 1px #333;
+    font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
+    color: #1B1B21;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .dynamic-island {
+    width: 70px; height: 22px;
+    background: #000;
+    border-radius: 20px;
+    margin: 10px auto 0;
+    flex-shrink: 0;
+  }
+  .topbar {
+    padding: 12px 16px 4px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #000;
+  }
+  /* Карточка точно как в реальном UI — серая, без тени, скруглённая */
+  .list-card {
+    background: #E8E4F0;
+    border-radius: 14px;
+    margin: 5px 12px;
+    padding: 13px 14px;
+  }
+  .list-card-title { font-size: 15px; font-weight: 500; color: #000; margin-bottom: 2px; }
+  .list-card-sub   { font-size: 12px; color: #6B6878; }
+
+  /* FAB — мягкий лавандовый прямоугольник как на скриншоте */
+  .fab {
+    position: absolute;
+    bottom: 22px; right: 14px;
+    width: 48px; height: 48px;
+    background: #DDD8F0;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: #3730A3;
+    font-weight: 300;
+  }
+
+  /* Slide caption below phone */
+  .slide-footer {
+    background: #F5F2FA;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding: 10px 14px 14px;
+    margin-top: auto;
+  }
+  .slide-title { font-size: 13px; font-weight: 600; text-align: center; color: #000; }
+  .slide-sub   { font-size: 10px; color: #6B6878; text-align: center; margin-top: 3px; line-height: 1.4; }
+  .dots { display:flex; justify-content:center; gap:5px; margin-top:8px; }
+  .dot { width:6px; height:6px; background:#C4BCDA; border-radius:3px; }
+  .dot.active { width:20px; background:#4052B5; }
+  .next-btn {
+    background: #4052B5; color: white;
+    border-radius: 12px; padding: 7px 14px;
+    font-size: 12px; font-weight: 600;
+    text-align: center; margin: 8px 14px 0;
+  }
+
+  /* Slides 2/3 — detail screen */
+  .topbar-detail {
+    padding: 8px 10px 6px;
+    display: flex; align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    gap: 4px;
+  }
+  .back { font-size: 15px; color: #4052B5; }
+  .topbar-ttl { font-size: 15px; font-weight: 600; flex:1; padding-left:4px; }
+  .topbar-icons { display:flex; gap:4px; }
+  .ti { font-size: 14px; color: #6B6878; }
+
+  .filter-row { display:flex; gap:6px; padding: 6px 12px; }
+  .chip { border: 1px solid #C4BCDA; border-radius: 8px; padding: 3px 10px; font-size: 11px; color: #1B1B21; }
+  .chip.sel { background: #DDD8F0; border-color: #4052B5; color: #3730A3; font-weight:500; }
+
+  .item-row { display:flex; align-items:flex-start; padding: 8px 12px 8px 8px; gap:0; }
+  .cb {
+    width: 18px; height: 18px;
+    border: 2px solid #9CA3AF; border-radius: 3px;
+    flex-shrink:0; margin-top:1px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .cb.on { background:#4052B5; border-color:#4052B5; }
+  .cb.on::after { content:'✓'; color:white; font-size:11px; font-weight:700; }
+  .item-col { flex:1; padding-left:8px; }
+  .it { font-size: 13px; color: #1B1B21; line-height:1.35; }
+  .it.done { text-decoration:line-through; color:#9CA3AF; }
+  .ic { font-size:10px; color:#4052B5; margin-top:1px; }
+  .tbtn { font-size:11px; color:#4052B5; font-weight:500; white-space:nowrap; line-height:1.35; padding-left:4px; }
+  .div { height:1px; background:rgba(0,0,0,0.07); margin-left:34px; }
+</style>
+
+<h2>Онбординг — точно по скриншоту</h2>
+<p class="subtitle">Серые карточки · лавандовый FAB · light purple фон · SF Pro</p>
+
+<div style="display:flex;gap:28px;flex-wrap:wrap;justify-content:center;padding:20px 0">
+
+  <!-- Слайд 1 -->
+  <div style="text-align:center">
+    <div class="phone">
+      <div class="dynamic-island"></div>
+      <div class="topbar">Мои списки</div>
+      <div style="height:4px"></div>
+
+      <div class="list-card">
+        <div class="list-card-title">Продукты</div>
+        <div class="list-card-sub">0 участников</div>
+      </div>
+      <div class="list-card">
+        <div class="list-card-title">В поездку</div>
+        <div class="list-card-sub">0 участников</div>
+      </div>
+      <div class="list-card">
+        <div class="list-card-title">День рождения</div>
+        <div class="list-card-sub">0 участников</div>
+      </div>
+
+      <div style="height:52px"></div>
+      <div class="fab">+</div>
+
+      <div class="slide-footer">
+        <div class="slide-title">Списки для всего</div>
+        <div class="slide-sub">Покупки, поездки, события — всё в одном приложении</div>
+        <div class="dots">
+          <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+        <div class="next-btn">Далее</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#555;margin-top:8px">Слайд 1</p>
+  </div>
+
+  <!-- Слайд 2 -->
+  <div style="text-align:center">
+    <div class="phone">
+      <div class="dynamic-island"></div>
+      <div class="topbar-detail">
+        <span class="back">‹</span>
+        <span class="topbar-ttl">Продукты</span>
+        <div class="topbar-icons">
+          <span class="ti">⌕</span><span class="ti">⎙</span><span class="ti">⋮</span>
+        </div>
+      </div>
+      <div class="filter-row">
+        <div class="chip sel">Все</div>
+        <div class="chip">Мои</div>
+      </div>
+
+      <div class="item-row">
+        <div class="cb"></div>
+        <div class="item-col"><div class="it">Молоко</div></div>
+        <div class="tbtn">Взять</div>
+      </div>
+      <div class="div"></div>
+      <div class="item-row">
+        <div class="cb"></div>
+        <div class="item-col">
+          <div class="it">Хлеб</div>
+          <div class="ic">→ Маша</div>
+        </div>
+        <div class="tbtn">Снять</div>
+      </div>
+      <div class="div"></div>
+      <div class="item-row">
+        <div class="cb"></div>
+        <div class="item-col"><div class="it">Яблоки</div></div>
+        <div class="tbtn">Взять</div>
+      </div>
+      <div class="div"></div>
+      <div class="item-row">
+        <div class="cb"></div>
+        <div class="item-col">
+          <div class="it">Сыр</div>
+          <div class="ic">→ Денис</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="slide-footer">
+        <div class="slide-title">Кто что берёт</div>
+        <div class="slide-sub">Нажми «Взять» — все участники сразу увидят</div>
+        <div class="dots">
+          <div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+        </div>
+        <div class="next-btn">Далее</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#555;margin-top:8px">Слайд 2</p>
+  </div>
+
+  <!-- Слайд 3 -->
+  <div style="text-align:center">
+    <div class="phone">
+      <div class="dynamic-island"></div>
+      <div class="topbar-detail">
+        <span class="back">‹</span>
+        <span class="topbar-ttl">Продукты</span>
+      </div>
+      <div class="filter-row">
+        <div class="chip sel">Все</div>
+        <div class="chip">Мои</div>
+      </div>
+
+      <div class="item-row">
+        <div class="cb on"></div>
+        <div class="item-col">
+          <div class="it done">Молоко</div>
+          <div class="ic">→ Денис</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="item-row">
+        <div class="cb on"></div>
+        <div class="item-col">
+          <div class="it done">Хлеб</div>
+          <div class="ic">→ Маша</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="item-row">
+        <div class="cb on"></div>
+        <div class="item-col">
+          <div class="it done">Яблоки</div>
+          <div class="ic">→ Петя</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="item-row">
+        <div class="cb on"></div>
+        <div class="item-col">
+          <div class="it done">Сыр</div>
+          <div class="ic">→ Денис</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="slide-footer">
+        <div class="slide-title">Всё куплено!</div>
+        <div class="slide-sub">Поделись списком — и никто ничего не забудет</div>
+        <div class="dots">
+          <div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+        </div>
+        <div class="next-btn">Создать первый список</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#555;margin-top:8px">Слайд 3</p>
+  </div>
+
+</div>

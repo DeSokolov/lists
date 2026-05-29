@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Settings v5</title>
+<style>
+  body {
+    background: #e0dce8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 20px;
+    font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+  h2  { width:100%;text-align:center;font-size:15px;color:#2a2040;margin-bottom:2px; }
+  .sub{ width:100%;text-align:center;font-size:11px;color:#888;margin-bottom:16px; }
+  .phone-wrap { text-align:center; }
+  .lbl { font-size:10px;color:#666;margin-top:7px; }
+
+  .phone {
+    border-radius:52px;border:8px solid #1a1a1a;
+    width:210px;height:460px;overflow:hidden;
+    box-shadow:0 10px 36px rgba(0,0,0,0.32),inset 0 0 0 1px #333;
+    display:flex;flex-direction:column;
+  }
+  .di { width:64px;height:18px;background:#000;border-radius:16px;margin:8px auto 0;flex-shrink:0; }
+
+  .topbar { display:flex;align-items:center;padding:5px 14px;gap:5px;flex-shrink:0; }
+  .back   { font-size:19px;line-height:1; }
+  .title  { font-size:15px;font-weight:600;flex:1; }
+
+  .content { flex:1;display:flex;flex-direction:column;padding:2px 0 12px;overflow:hidden; }
+
+  /* section label — flush left, bigger */
+  .slabel {
+    font-size:14px;
+    font-weight:500;
+    padding: 8px 14px 3px;
+    text-align: left;
+  }
+
+  /* name input */
+  .ninput { font-size:12px;border-radius:8px;padding:5px 10px;margin:0 14px 2px;width:calc(100% - 28px);box-sizing:border-box;border:none; }
+
+  /* divider */
+  .div { height:1px;margin:5px 14px;opacity:0.1; }
+
+  /* vertical swatches — indented to align under label */
+  .swatches { display:flex;flex-direction:column;gap:0;padding:2px 14px; }
+  .sw-item  { display:flex;align-items:center;gap:8px;padding:3px 0; }
+  .circle   { width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0; }
+  .sw-name  { font-size:12px; }
+
+  /* notifications row — label flush left */
+  .notif-row { display:flex;align-items:center;padding:8px 14px;gap:8px; }
+  .notif-lbl { font-size:14px;font-weight:500;flex:1;text-align:left; }
+
+  /* toggle */
+  .tog { width:28px;height:16px;border-radius:8px;position:relative;flex-shrink:0; }
+
+  .spacer { flex:1; }
+  .ver { text-align:center;font-size:9px;opacity:0.25;padding-bottom:2px;flex-shrink:0; }
+
+  /* WHITE */
+  .W { background:#F8F9FF; }
+  .W .topbar { border-bottom:1px solid rgba(0,0,0,0.07); }
+  .W .back   { color:#4052B5; }
+  .W .title,.W .slabel,.W .notif-lbl { color:#1B1B21; }
+  .W .ninput { background:#E3E1EC;color:#1B1B21; }
+  .W .div    { background:#1B1B21; }
+  .W .sw-name{ color:#46464F; }
+  .W .c-w    { background:#F8F9FF;border:1px solid #C4BCDA; }
+  .W .c-b    { background:#111318; }
+  .W .c-p    { background:#FFD6E7;border:1px solid #F4A5C0; }
+  .W .ck     { color:#4052B5; }
+
+  /* BLACK */
+  .B { background:#111318; }
+  .B .topbar { border-bottom:1px solid rgba(255,255,255,0.07); }
+  .B .back   { color:#BBC4FF; }
+  .B .title,.B .slabel,.B .notif-lbl { color:#E6E0E9; }
+  .B .ninput { background:#2B2930;color:#E6E0E9; }
+  .B .div    { background:#E6E0E9; }
+  .B .sw-name{ color:#928F9A; }
+  .B .c-w    { background:#F8F9FF;border:1px solid #928F9A; }
+  .B .c-b    { background:#111318;border:1px solid #BBC4FF; }
+  .B .c-p    { background:#FFD6E7; }
+  .B .ck     { color:#BBC4FF; }
+  .B .ver    { color:#E6E0E9; }
+
+  /* PINK */
+  .P { background:#FFF8F9; }
+  .P .topbar { border-bottom:1px solid rgba(0,0,0,0.07); }
+  .P .back   { color:#B5346B; }
+  .P .title,.P .slabel,.P .notif-lbl { color:#22191C; }
+  .P .ninput { background:#F8D7E3;color:#22191C; }
+  .P .div    { background:#22191C; }
+  .P .sw-name{ color:#7D5260; }
+  .P .c-w    { background:#F8F9FF;border:1px solid #EAB8CC; }
+  .P .c-b    { background:#111318; }
+  .P .c-p    { background:#FFD6E7;border:1px solid #B5346B; }
+  .P .ck     { color:#B5346B; }
+</style>
+</head>
+<body>
+
+<h2>Настройки — v5</h2>
+<p class="sub">Заголовки пунктов по левому краю · шрифт 14px</p>
+
+<!-- WHITE -->
+<div class="phone-wrap">
+<div class="phone W">
+  <div class="di"></div>
+  <div class="topbar W"><span class="back W">‹</span><span class="title W">Настройки</span></div>
+  <div class="content">
+    <div class="slabel W">Имя</div>
+    <input class="ninput W" value="Денис" readonly>
+    <div class="div W"></div>
+    <div class="slabel W">Тема</div>
+    <div class="swatches">
+      <div class="sw-item"><div class="circle c-w W"><span class="ck W">✓</span></div><span class="sw-name W">Белая</span></div>
+      <div class="sw-item"><div class="circle c-b W"></div><span class="sw-name W">Чёрная</span></div>
+      <div class="sw-item"><div class="circle c-p W"></div><span class="sw-name W">Розовая</span></div>
+    </div>
+    <div class="div W"></div>
+    <div class="notif-row W">
+      <span class="notif-lbl W">Уведомления</span>
+      <div class="tog" style="background:#4052B5"><span style="position:absolute;width:12px;height:12px;background:white;border-radius:50%;top:2px;right:2px;box-shadow:0 1px 2px rgba(0,0,0,0.3);display:block"></span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="ver">v0.1.0</div>
+  </div>
+</div>
+<p class="lbl">⚪ Белая</p>
+</div>
+
+<!-- BLACK -->
+<div class="phone-wrap">
+<div class="phone B">
+  <div class="di"></div>
+  <div class="topbar B"><span class="back B">‹</span><span class="title B">Настройки</span></div>
+  <div class="content">
+    <div class="slabel B">Имя</div>
+    <input class="ninput B" value="Денис" readonly>
+    <div class="div B"></div>
+    <div class="slabel B">Тема</div>
+    <div class="swatches">
+      <div class="sw-item"><div class="circle c-w B"></div><span class="sw-name B">Белая</span></div>
+      <div class="sw-item"><div class="circle c-b B"><span class="ck B">✓</span></div><span class="sw-name B" style="color:#E6E0E9">Чёрная</span></div>
+      <div class="sw-item"><div class="circle c-p B"></div><span class="sw-name B">Розовая</span></div>
+    </div>
+    <div class="div B"></div>
+    <div class="notif-row B">
+      <span class="notif-lbl B">Уведомления</span>
+      <div class="tog" style="background:#BBC4FF"><span style="position:absolute;width:12px;height:12px;background:white;border-radius:50%;top:2px;right:2px;box-shadow:0 1px 2px rgba(0,0,0,0.4);display:block"></span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="ver B">v0.1.0</div>
+  </div>
+</div>
+<p class="lbl">⚫ Чёрная</p>
+</div>
+
+<!-- PINK -->
+<div class="phone-wrap">
+<div class="phone P">
+  <div class="di"></div>
+  <div class="topbar P"><span class="back P">‹</span><span class="title P">Настройки</span></div>
+  <div class="content">
+    <div class="slabel P">Имя</div>
+    <input class="ninput P" value="Денис" readonly>
+    <div class="div P"></div>
+    <div class="slabel P">Тема</div>
+    <div class="swatches">
+      <div class="sw-item"><div class="circle c-w P"></div><span class="sw-name P">Белая</span></div>
+      <div class="sw-item"><div class="circle c-b P"></div><span class="sw-name P">Чёрная</span></div>
+      <div class="sw-item"><div class="circle c-p P"><span class="ck P">✓</span></div><span class="sw-name P" style="color:#22191C">Розовая</span></div>
+    </div>
+    <div class="div P"></div>
+    <div class="notif-row P">
+      <span class="notif-lbl P">Уведомления</span>
+      <div class="tog" style="background:#B5346B"><span style="position:absolute;width:12px;height:12px;background:white;border-radius:50%;top:2px;right:2px;box-shadow:0 1px 2px rgba(0,0,0,0.3);display:block"></span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="ver">v0.1.0</div>
+  </div>
+</div>
+<p class="lbl">🩷 Розовая</p>
+</div>
+
+</body>
+</html>

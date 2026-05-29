@@ -1,0 +1,7 @@
+{"type":"server-started","port":49482,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:49482","screen_dir":"/Users/desokolov/Desktop/projects/projects_different/lists/.superpowers/brainstorm/62810-1779911192/content","state_dir":"/Users/desokolov/Desktop/projects/projects_different/lists/.superpowers/brainstorm/62810-1779911192/state"}
+{"type":"screen-added","file":"/Users/desokolov/Desktop/projects/projects_different/lists/.superpowers/brainstorm/62810-1779911192/content/settings-screen.html"}
+{"type":"screen-added","file":"/Users/desokolov/Desktop/projects/projects_different/lists/.superpowers/brainstorm/62810-1779911192/content/settings-v2.html"}
+{"type":"screen-added","file":"/Users/desokolov/Desktop/projects/projects_different/lists/.superpowers/brainstorm/62810-1779911192/content/settings-v3.html"}
+{"type":"screen-added","file":"/Users/desokolov/Desktop/projects/projects_different/lists/.superpowers/brainstorm/62810-1779911192/content/settings-v4.html"}
+{"type":"screen-added","file":"/Users/desokolov/Desktop/projects/projects_different/lists/.superpowers/brainstorm/62810-1779911192/content/settings-v5.html"}
+{"type":"server-stopped","reason":"idle timeout"}

@@ -1,0 +1,277 @@
+<style>
+  body { background: #f0f0f0; }
+  .phone {
+    background: #F8F9FF;
+    border-radius: 28px;
+    border: 2px solid #C7C5D0;
+    width: 170px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    font-family: 'Roboto', system-ui, sans-serif;
+    color: #1B1B21;
+    display: flex;
+    flex-direction: column;
+  }
+  .topbar {
+    background: #F8F9FF;
+    padding: 10px 8px 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-bottom: 1px solid #E3E1EC;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .topbar-icon { color: #46464F; font-size: 16px; }
+  .topbar-actions { margin-left: auto; display:flex; gap:2px; }
+  .item-row {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px 6px 4px;
+    gap: 2px;
+    background: #F8F9FF;
+  }
+  .m3-checkbox {
+    width: 16px; height: 16px;
+    border: 2px solid #777680;
+    border-radius: 2px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .m3-checkbox.checked {
+    background: #4052B5;
+    border-color: #4052B5;
+  }
+  .m3-checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .item-text { flex: 1; padding: 0 4px; }
+  .item-title { font-size: 12px; color: #1B1B21; }
+  .item-title.done { text-decoration: line-through; color: #777680; }
+  .item-claimed { font-size: 9px; color: #4052B5; }
+  .text-btn { font-size: 10px; color: #4052B5; font-weight: 500; white-space: nowrap; }
+  .divider { height: 1px; background: #E3E1EC; margin-left: 36px; }
+  .filter-row { display:flex; gap:6px; padding: 5px 8px; }
+  .chip {
+    border: 1px solid #777680;
+    border-radius: 8px;
+    padding: 2px 8px;
+    font-size: 10px;
+    color: #1B1B21;
+  }
+  .chip.selected {
+    background: #DDE1FF;
+    border-color: #4052B5;
+    color: #000F60;
+  }
+  .fab {
+    background: #4052B5;
+    color: white;
+    border-radius: 16px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    margin: 8px;
+  }
+  .notch {
+    width: 36px; height: 5px;
+    background: #C7C5D0;
+    border-radius: 3px;
+    margin: 8px auto 4px;
+  }
+  .skip {
+    font-size: 9px;
+    color: #4052B5;
+    text-align: right;
+    padding: 0 10px 4px;
+  }
+  .slide-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1B1B21;
+    text-align: center;
+    padding: 8px 10px 2px;
+  }
+  .slide-sub {
+    font-size: 10px;
+    color: #46464F;
+    text-align: center;
+    padding: 0 10px 8px;
+    line-height: 1.4;
+  }
+  .dots {
+    display: flex; justify-content: center; gap: 5px; padding: 6px 0 10px;
+  }
+  .dot { width: 6px; height: 6px; background: #C7C5D0; border-radius: 3px; }
+  .dot.active { width: 20px; background: #4052B5; }
+  .list-card {
+    background: white;
+    border-radius: 12px;
+    padding: 8px 10px;
+    margin: 4px 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .list-card-emoji { font-size: 20px; }
+  .list-card-title { font-size: 11px; font-weight: 600; }
+  .list-card-sub { font-size: 9px; color: #4052B5; }
+</style>
+
+<h2>Онбординг — точно по коду</h2>
+<p class="subtitle">Checkbox, TextButton «Взять», «→ Маша» синим — как в ItemRow.kt и ListCard.kt</p>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; padding:16px 0">
+
+  <!-- Слайд 1 -->
+  <div style="text-align:center">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="skip">Пропустить</div>
+      <div class="topbar">Мои списки</div>
+
+      <div class="list-card">
+        <div class="list-card-emoji">🛒</div>
+        <div>
+          <div class="list-card-title">Продукты</div>
+          <div class="list-card-sub">Покупки</div>
+        </div>
+      </div>
+      <div class="list-card">
+        <div class="list-card-emoji">🧳</div>
+        <div>
+          <div class="list-card-title">На море</div>
+          <div class="list-card-sub">Поездка</div>
+        </div>
+      </div>
+      <div class="list-card">
+        <div class="list-card-emoji">🎉</div>
+        <div>
+          <div class="list-card-title">День рождения</div>
+          <div class="list-card-sub">Мероприятие</div>
+        </div>
+      </div>
+
+      <div class="slide-title">Списки для всего</div>
+      <div class="slide-sub">Покупки, поездки, события — всё в одном месте</div>
+      <div class="dots">
+        <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <div class="fab">Далее</div>
+    </div>
+    <p style="font-size:12px;color:#46464F;margin-top:8px">Слайд 1</p>
+  </div>
+
+  <!-- Слайд 2 -->
+  <div style="text-align:center">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="skip">Пропустить</div>
+      <div class="topbar">
+        <span>←</span>
+        <span style="flex:1">Продукты</span>
+        <span class="topbar-actions">
+          <span class="topbar-icon">🔍</span>
+          <span class="topbar-icon">⎙</span>
+          <span class="topbar-icon">⋮</span>
+        </span>
+      </div>
+      <div class="filter-row">
+        <div class="chip selected">Все</div>
+        <div class="chip">Мои</div>
+      </div>
+
+      <div class="item-row">
+        <div class="m3-checkbox"></div>
+        <div class="item-text">
+          <div class="item-title">Молоко</div>
+        </div>
+        <div class="text-btn">Взять</div>
+      </div>
+      <div class="divider"></div>
+      <div class="item-row">
+        <div class="m3-checkbox"></div>
+        <div class="item-text">
+          <div class="item-title">Хлеб</div>
+          <div class="item-claimed">→ Маша</div>
+        </div>
+        <div class="text-btn">Снять</div>
+      </div>
+      <div class="divider"></div>
+      <div class="item-row">
+        <div class="m3-checkbox"></div>
+        <div class="item-text">
+          <div class="item-title">Яблоки</div>
+        </div>
+        <div class="text-btn">Взять</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="slide-title">Кто что берёт</div>
+      <div class="slide-sub">Нажми «Взять» — все участники увидят, что это твой пункт</div>
+      <div class="dots">
+        <div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+      </div>
+      <div class="fab">Далее</div>
+    </div>
+    <p style="font-size:12px;color:#46464F;margin-top:8px">Слайд 2</p>
+  </div>
+
+  <!-- Слайд 3 -->
+  <div style="text-align:center">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="topbar">
+        <span>←</span>
+        <span style="flex:1">Продукты</span>
+      </div>
+      <div class="filter-row">
+        <div class="chip selected">Все</div>
+        <div class="chip">Мои</div>
+      </div>
+
+      <div class="item-row">
+        <div class="m3-checkbox checked"></div>
+        <div class="item-text">
+          <div class="item-title done">Молоко</div>
+          <div class="item-claimed">→ Денис</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="item-row">
+        <div class="m3-checkbox checked"></div>
+        <div class="item-text">
+          <div class="item-title done">Хлеб</div>
+          <div class="item-claimed">→ Маша</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="item-row">
+        <div class="m3-checkbox checked"></div>
+        <div class="item-text">
+          <div class="item-title done">Яблоки</div>
+          <div class="item-claimed">→ Петя</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="slide-title">Всё куплено!</div>
+      <div class="slide-sub">Поделись списком — и никто ничего не забудет</div>
+      <div class="dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+      </div>
+      <div class="fab">Создать первый список</div>
+    </div>
+    <p style="font-size:12px;color:#46464F;margin-top:8px">Слайд 3</p>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:8px;padding:12px;background:rgba(64,82,181,0.08);border-radius:8px;font-size:12px">
+  <strong>Точно по коду:</strong> Checkbox из Material 3 · TextButton «Взять/Снять» · «→ Маша» цвет primary · 🧳 (не ✈️) · HorizontalDivider · FilterChip «Все/Мои» · белые карточки в ListsScreen
+</div>

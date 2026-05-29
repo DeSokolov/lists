@@ -1,0 +1,190 @@
+<style>
+  .phone {
+    background: #F8F9FF;
+    border-radius: 24px;
+    border: 2px solid #C7C5D0;
+    padding: 16px 12px 20px;
+    width: 160px;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    color: #1B1B21;
+    font-family: system-ui, sans-serif;
+  }
+  .phone-notch {
+    width: 40px;
+    height: 6px;
+    background: #C7C5D0;
+    border-radius: 3px;
+    margin: 0 auto 12px;
+  }
+  .m3-card {
+    background: white;
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    margin-bottom: 8px;
+    font-size: 11px;
+  }
+  .m3-fab {
+    background: #4052B5;
+    color: white;
+    border-radius: 16px;
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: auto;
+  }
+  .m3-chip {
+    background: #DDE1FF;
+    color: #000F60;
+    border-radius: 8px;
+    padding: 3px 8px;
+    font-size: 10px;
+    display: inline-block;
+  }
+  .m3-topbar {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1B1B21;
+    margin-bottom: 10px;
+  }
+  .skip-btn {
+    position: absolute;
+    top: 16px;
+    right: 14px;
+    font-size: 10px;
+    color: #777680;
+  }
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 12px;
+  }
+  .dot { width: 6px; height: 6px; background: #C7C5D0; border-radius: 3px; }
+  .dot.active { width: 20px; background: #4052B5; }
+  .row-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #1B1B21;
+    padding: 3px 0;
+  }
+  .taken-name { color: #4052B5; font-size: 9px; margin-left: auto; }
+  .check { color: #4052B5; }
+</style>
+
+<h2>Онбординг — в стиле приложения</h2>
+<p class="subtitle">Material 3 · Light theme · primary #4052B5 · F8F9FF background</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="s1" onclick="toggleSelect(this)">
+    <div class="card-image" style="display:flex;justify-content:center;padding:16px 0">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="skip-btn">Пропустить</div>
+        <div class="m3-topbar">Мои списки</div>
+
+        <div class="m3-card">
+          <div class="row-item">🛒 <span style="font-weight:600">Продукты</span> <span class="m3-chip" style="margin-left:auto">Покупки</span></div>
+        </div>
+        <div class="m3-card">
+          <div class="row-item">✈️ <span style="font-weight:600">На море</span> <span class="m3-chip" style="margin-left:auto">Поездка</span></div>
+        </div>
+        <div class="m3-card">
+          <div class="row-item">🎉 <span style="font-weight:600">День рождения</span> <span class="m3-chip" style="margin-left:auto">Событие</span></div>
+        </div>
+
+        <div style="text-align:center;margin-top:10px">
+          <div style="font-size:12px;font-weight:700;color:#1B1B21">Списки для всего</div>
+          <div style="font-size:10px;color:#46464F;margin-top:3px">Покупки, поездки, события — всё в одном месте</div>
+        </div>
+        <div class="dots">
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <div class="m3-fab" style="margin-top:10px;font-size:10px">Далее →</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Слайд 1 — Списки для всего</h3>
+      <p>Реальный экран приложения. Карточки с эмодзи и чипом типа — точь-в-точь как в ListCard.kt</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="s2" onclick="toggleSelect(this)">
+    <div class="card-image" style="display:flex;justify-content:center;padding:16px 0">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="skip-btn">Пропустить</div>
+        <div class="m3-topbar">🛒 Продукты</div>
+
+        <div class="m3-card">
+          <div class="row-item"><span class="check">✅</span> Молоко <span class="taken-name">Маша</span></div>
+          <div class="row-item"><span class="check">✅</span> Хлеб <span class="taken-name">Денис</span></div>
+          <div class="row-item">⬜ Яблоки <span style="margin-left:auto"></span></div>
+          <div class="row-item">⬜ Сыр <span style="margin-left:auto"></span></div>
+        </div>
+
+        <div style="background:#DDE1FF;border-radius:10px;padding:8px 10px;font-size:10px;color:#000F60;margin-top:4px">
+          👆 Нажми «Взять» — все увидят, что <b>ты</b> берёшь этот пункт
+        </div>
+
+        <div style="text-align:center;margin-top:10px">
+          <div style="font-size:12px;font-weight:700;color:#1B1B21">Кто что берёт</div>
+          <div style="font-size:10px;color:#46464F;margin-top:3px">Отмечай пункты за собой — все видят в реальном времени</div>
+        </div>
+        <div class="dots">
+          <div class="dot"></div>
+          <div class="dot active"></div>
+          <div class="dot"></div>
+        </div>
+        <div class="m3-fab" style="margin-top:10px;font-size:10px">Далее →</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Слайд 2 — Кто что берёт</h3>
+      <p>Экран деталей списка: чекбоксы, имена участников. Синяя подсказка в стиле primaryContainer.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="s3" onclick="toggleSelect(this)">
+    <div class="card-image" style="display:flex;justify-content:center;padding:16px 0">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="m3-topbar">🛒 Продукты</div>
+
+        <div class="m3-card">
+          <div class="row-item"><span class="check">✅</span> <span style="text-decoration:line-through;color:#777680">Молоко</span> <span class="taken-name">Маша</span></div>
+          <div class="row-item"><span class="check">✅</span> <span style="text-decoration:line-through;color:#777680">Хлеб</span> <span class="taken-name">Денис</span></div>
+          <div class="row-item"><span class="check">✅</span> <span style="text-decoration:line-through;color:#777680">Яблоки</span> <span class="taken-name">Петя</span></div>
+        </div>
+
+        <div style="text-align:center;margin-top:12px">
+          <div style="font-size:20px">🎉</div>
+          <div style="font-size:12px;font-weight:700;color:#1B1B21;margin-top:6px">Всё куплено!</div>
+          <div style="font-size:10px;color:#46464F;margin-top:3px">Поделись списком — и никто ничего не забудет</div>
+        </div>
+
+        <div class="dots" style="margin-top:10px">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot active"></div>
+        </div>
+        <div class="m3-fab" style="margin-top:10px;font-size:10px">Создать первый список →</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Слайд 3 — Финал + CTA</h3>
+      <p>Все пункты выполнены, имена участников. Кнопка «Создать первый список» — тот же FAB-стиль.</p>
+    </div>
+  </div>
+
+</div>

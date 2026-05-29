@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Settings v2</title>
+<style>
+  body {
+    background: #e0dce8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 20px;
+    font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+  h2 { width:100%; text-align:center; font-size:17px; color:#2a2040; margin-bottom:2px; }
+  .subtitle { width:100%; text-align:center; font-size:11px; color:#6B6878; margin-bottom:20px; }
+  .phone-wrap { text-align:center; }
+  .lbl { font-size:10px; color:#666; margin-top:8px; }
+
+  .phone {
+    border-radius: 52px;
+    border: 8px solid #1a1a1a;
+    width: 220px;
+    height: 480px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35), inset 0 0 0 1px #333;
+    display: flex;
+    flex-direction: column;
+  }
+  .dynamic-island {
+    width: 70px; height: 20px; background: #000;
+    border-radius: 20px; margin: 8px auto 0; flex-shrink:0;
+  }
+
+  /* TopBar */
+  .topbar {
+    display: flex; align-items: center;
+    padding: 6px 14px 6px; gap: 6px; flex-shrink:0;
+  }
+  .back { font-size:20px; line-height:1; }
+  .topbar-title { font-size:16px; font-weight:600; flex:1; }
+
+  /* Content fills remaining height, items spread out */
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0 16px;
+  }
+
+  .row {
+    display: flex; align-items: center;
+    padding: 10px 16px; gap: 10px;
+  }
+  .divider { height:1px; margin: 0 16px; opacity: 0.12; background: currentColor; }
+
+  .row-label { font-size:14px; font-weight:500; flex:1; }
+  .row-value { font-size:13px; opacity:0.5; }
+
+  /* Name input */
+  .name-input {
+    border-radius: 10px;
+    padding: 7px 11px;
+    font-size:13px;
+    margin: 0 16px;
+    width: calc(100% - 32px);
+    box-sizing: border-box;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* Color swatches — compact row */
+  .swatches {
+    display: flex; gap: 16px;
+    padding: 0 16px;
+    align-items: center;
+  }
+  .swatch-item { display:flex; align-items:center; gap:6px; }
+  .circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:700;
+  }
+  .swatch-name { font-size:11px; }
+
+  /* Switch */
+  .sw {
+    width:34px; height:20px; border-radius:10px; flex-shrink:0; position:relative;
+  }
+  .sw::after {
+    content:''; position:absolute;
+    width:16px; height:16px; background:white; border-radius:50%;
+    top:2px; right:2px; box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .sw.off::after { right:auto; left:2px; }
+
+  /* Spacer */
+  .spacer { flex:1; }
+
+  /* ─── WHITE ─── */
+  .W { background:#F8F9FF; color:#1B1B21; }
+  .W .topbar { border-bottom:1px solid rgba(0,0,0,0.07); }
+  .W .back { color:#4052B5; }
+  .W .topbar-title { color:#1B1B21; }
+  .W .name-input { background:#E3E1EC; color:#1B1B21; border:none; }
+  .W .row-label { color:#1B1B21; }
+  .W .row-value { color:#1B1B21; }
+  .W .swatch-name { color:#46464F; }
+  .W .c-w { background:#F8F9FF; border:1.5px solid #C4BCDA; }
+  .W .c-b { background:#111318; }
+  .W .c-p { background:#FFD6E7; border:1.5px solid #F4A5C0; }
+  .W .sw-on { background:#4052B5; }
+  .W .check { color:#4052B5; }
+
+  /* ─── BLACK ─── */
+  .B { background:#111318; color:#E6E0E9; }
+  .B .topbar { border-bottom:1px solid rgba(255,255,255,0.07); }
+  .B .back { color:#BBC4FF; }
+  .B .topbar-title { color:#E6E0E9; }
+  .B .name-input { background:#2B2930; color:#E6E0E9; border:none; }
+  .B .row-label { color:#E6E0E9; }
+  .B .row-value { color:#E6E0E9; }
+  .B .swatch-name { color:#928F9A; }
+  .B .c-w { background:#F8F9FF; border:1.5px solid #928F9A; }
+  .B .c-b { background:#111318; border:1.5px solid #BBC4FF; }
+  .B .c-p { background:#FFD6E7; border:1.5px solid #F4A5C0; }
+  .B .sw-on { background:#BBC4FF; }
+  .B .check { color:#BBC4FF; }
+
+  /* ─── PINK ─── */
+  .P { background:#FFF8F9; color:#22191C; }
+  .P .topbar { border-bottom:1px solid rgba(0,0,0,0.07); }
+  .P .back { color:#B5346B; }
+  .P .topbar-title { color:#22191C; }
+  .P .name-input { background:#F8D7E3; color:#22191C; border:none; }
+  .P .row-label { color:#22191C; }
+  .P .row-value { color:#22191C; }
+  .P .swatch-name { color:#7D5260; }
+  .P .c-w { background:#F8F9FF; border:1.5px solid #EAB8CC; }
+  .P .c-b { background:#111318; }
+  .P .c-p { background:#FFD6E7; border:1.5px solid #B5346B; }
+  .P .sw-on { background:#B5346B; }
+  .P .check { color:#B5346B; }
+</style>
+</head>
+<body>
+
+<h2>Экран Настройки — v2</h2>
+<p class="subtitle">Компактно · элементы на всю высоту · место для новых пунктов</p>
+
+<!-- WHITE -->
+<div class="phone-wrap">
+<div class="phone W">
+  <div class="dynamic-island"></div>
+  <div class="topbar W">
+    <span class="back W">‹</span>
+    <span class="topbar-title W">Настройки</span>
+  </div>
+  <div class="content">
+    <!-- Имя -->
+    <div class="row W"><span class="row-label W">Имя</span></div>
+    <input class="name-input W" value="Денис" readonly>
+
+    <div class="divider W" style="margin-top:6px"></div>
+
+    <!-- Тема -->
+    <div class="row W"><span class="row-label W">Тема</span></div>
+    <div class="swatches" style="padding-bottom:8px">
+      <div class="swatch-item">
+        <div class="circle c-w W"><span class="check W">✓</span></div>
+        <span class="swatch-name W">Белая</span>
+      </div>
+      <div class="swatch-item">
+        <div class="circle c-b W"></div>
+        <span class="swatch-name W">Чёрная</span>
+      </div>
+      <div class="swatch-item">
+        <div class="circle c-p W"></div>
+        <span class="swatch-name W">Розовая</span>
+      </div>
+    </div>
+
+    <div class="divider W"></div>
+
+    <!-- Уведомления -->
+    <div class="row W">
+      <span class="row-label W">Уведомления</span>
+      <div class="sw sw-on W" style="background:#4052B5"></div>
+    </div>
+
+    <!-- Пустое место для будущих пунктов -->
+    <div class="spacer"></div>
+
+    <!-- Версия — мелко внизу -->
+    <div style="text-align:center;font-size:10px;opacity:0.3;padding-bottom:4px">v0.1.0</div>
+  </div>
+</div>
+<p class="lbl">⚪ Белая</p>
+</div>
+
+<!-- BLACK -->
+<div class="phone-wrap">
+<div class="phone B">
+  <div class="dynamic-island"></div>
+  <div class="topbar B">
+    <span class="back B">‹</span>
+    <span class="topbar-title B">Настройки</span>
+  </div>
+  <div class="content">
+    <div class="row B"><span class="row-label B">Имя</span></div>
+    <input class="name-input B" value="Денис" readonly>
+
+    <div class="divider B" style="margin-top:6px"></div>
+
+    <div class="row B"><span class="row-label B">Тема</span></div>
+    <div class="swatches" style="padding-bottom:8px">
+      <div class="swatch-item">
+        <div class="circle c-w B"></div>
+        <span class="swatch-name B">Белая</span>
+      </div>
+      <div class="swatch-item">
+        <div class="circle c-b B"><span class="check B">✓</span></div>
+        <span class="swatch-name B" style="color:#E6E0E9">Чёрная</span>
+      </div>
+      <div class="swatch-item">
+        <div class="circle c-p B"></div>
+        <span class="swatch-name B">Розовая</span>
+      </div>
+    </div>
+
+    <div class="divider B"></div>
+
+    <div class="row B">
+      <span class="row-label B">Уведомления</span>
+      <div class="sw" style="background:#BBC4FF;border-radius:10px;width:34px;height:20px;position:relative;flex-shrink:0">
+        <span style="position:absolute;width:16px;height:16px;background:white;border-radius:50%;top:2px;right:2px;display:block;box-shadow:0 1px 3px rgba(0,0,0,0.4)"></span>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div style="text-align:center;font-size:10px;opacity:0.25;padding-bottom:4px">v0.1.0</div>
+  </div>
+</div>
+<p class="lbl">⚫ Чёрная</p>
+</div>
+
+<!-- PINK -->
+<div class="phone-wrap">
+<div class="phone P">
+  <div class="dynamic-island"></div>
+  <div class="topbar P">
+    <span class="back P">‹</span>
+    <span class="topbar-title P">Настройки</span>
+  </div>
+  <div class="content">
+    <div class="row P"><span class="row-label P">Имя</span></div>
+    <input class="name-input P" value="Денис" readonly>
+
+    <div class="divider P" style="margin-top:6px"></div>
+
+    <div class="row P"><span class="row-label P">Тема</span></div>
+    <div class="swatches" style="padding-bottom:8px">
+      <div class="swatch-item">
+        <div class="circle c-w P"></div>
+        <span class="swatch-name P">Белая</span>
+      </div>
+      <div class="swatch-item">
+        <div class="circle c-b P"></div>
+        <span class="swatch-name P">Чёрная</span>
+      </div>
+      <div class="swatch-item">
+        <div class="circle c-p P"><span class="check P">✓</span></div>
+        <span class="swatch-name P" style="color:#22191C">Розовая</span>
+      </div>
+    </div>
+
+    <div class="divider P"></div>
+
+    <div class="row P">
+      <span class="row-label P">Уведомления</span>
+      <div class="sw" style="background:#B5346B;border-radius:10px;width:34px;height:20px;position:relative;flex-shrink:0">
+        <span style="position:absolute;width:16px;height:16px;background:white;border-radius:50%;top:2px;right:2px;display:block;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></span>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div style="text-align:center;font-size:10px;opacity:0.3;padding-bottom:4px">v0.1.0</div>
+  </div>
+</div>
+<p class="lbl">🩷 Розовая</p>
+</div>
+
+</body>
+</html>

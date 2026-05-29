@@ -1,0 +1,90 @@
+<h2>Где выбирать шаблон?</h2>
+<p class="subtitle">Как шаблоны встраиваются в существующий флоу создания списка</p>
+
+<div class="options">
+
+  <div class="option" data-choice="inside-dialog" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Внутри диалога создания</h3>
+      <p>После выбора типа списка — появляется секция «Начать с шаблона». Всё в одном диалоге.</p>
+      <div class="mockup" style="margin-top:12px">
+        <div class="mockup-header">Диалог «Новый список»</div>
+        <div class="mockup-body" style="font-size:13px;line-height:1.8">
+          <div style="margin-bottom:8px"><input class="mock-input" placeholder="Название списка" style="width:100%"/></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+            <button class="mock-button" style="font-size:11px;padding:4px 10px;background:#4CAF50;color:white">🛒 Покупки</button>
+            <button class="mock-button" style="font-size:11px;padding:4px 10px">✈️ Поездка</button>
+            <button class="mock-button" style="font-size:11px;padding:4px 10px">🎉 Событие</button>
+          </div>
+          <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:10px;margin-bottom:8px">
+            <span class="label">Начать с шаблона</span>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="mock-button" style="font-size:11px;padding:4px 10px;background:rgba(76,175,80,0.2);border-color:#4CAF50">На неделю</button>
+            <button class="mock-button" style="font-size:11px;padding:4px 10px">Праздник</button>
+            <button class="mock-button" style="font-size:11px;padding:4px 10px">Пустой</button>
+          </div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Нет новых экранов</li><li>Быстрый флоу</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Диалог становится длиннее</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="bottom-sheet" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>BottomSheet после создания</h3>
+      <p>Список создаётся пустым, затем сразу появляется BottomSheet: «Добавить из шаблона?»</p>
+      <div class="mockup" style="margin-top:12px">
+        <div class="mockup-header">Экран деталей → BottomSheet</div>
+        <div class="mockup-body" style="font-size:13px;line-height:1.8">
+          <div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px 0">Список пуст</div>
+          <div style="border-top:2px solid rgba(255,255,255,0.15);padding-top:12px">
+            <div style="text-align:center;font-weight:600;margin-bottom:8px">Начать с шаблона?</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button class="mock-button" style="font-size:12px">📋 На неделю (12 пунктов)</button>
+              <button class="mock-button" style="font-size:12px">🥗 Здоровое питание (8 пунктов)</button>
+              <button class="mock-button" style="font-size:12px">Начать пустым</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Диалог не меняется</li><li>Шаблоны видны развёрнуто</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Дополнительный шаг</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="fab-menu" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Кнопка «+ Из шаблона» в списке</h3>
+      <p>В пустом списке — два FAB или кнопка «Из шаблона» рядом с «Добавить пункт».</p>
+      <div class="mockup" style="margin-top:12px">
+        <div class="mockup-header">Экран деталей (пустой список)</div>
+        <div class="mockup-body" style="font-size:13px;line-height:1.8">
+          <div style="text-align:center;color:rgba(255,255,255,0.4);padding:16px 0">Список пока пуст</div>
+          <div style="display:flex;justify-content:center;gap:12px;margin-top:8px">
+            <button class="mock-button" style="font-size:12px">+ Добавить пункт</button>
+            <button class="mock-button" style="font-size:12px;background:rgba(76,175,80,0.2);border-color:#4CAF50">📋 Из шаблона</button>
+          </div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Можно добавить в любой момент</li><li>Не навязывает шаблон</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Менее заметно</li><li>Сложнее найти</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:20px;padding:14px;background:rgba(255,255,255,0.05);border-radius:8px">
+  <span class="label">Рекомендация</span>
+  <p style="margin-top:6px"><strong>A</strong> — быстрее реализовать, нет новых экранов, естественный флоу: выбрал тип → сразу видишь подходящие шаблоны.</p>
+</div>

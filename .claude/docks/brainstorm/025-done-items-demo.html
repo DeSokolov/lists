@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lists — Фича 025: Выполненные пункты вниз</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, 'Roboto', sans-serif;
+    background: #E8E8EE;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .phone-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .phone {
+    width: 320px;
+    height: 620px;
+    background: #F8F9FF;
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 0 0 2px #C8C8D4;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TopAppBar */
+  .topbar {
+    background: #F8F9FF;
+    padding: 48px 8px 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-bottom: 1px solid rgba(119,118,128,0.12);
+  }
+  .topbar-back {
+    width: 40px; height: 40px;
+    border: none; background: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #1B1B21;
+    font-size: 18px;
+  }
+  .topbar-title {
+    flex: 1;
+    font-size: 18px;
+    font-weight: 500;
+    color: #1B1B21;
+    padding-left: 4px;
+  }
+
+  /* Filter chips */
+  .chips {
+    padding: 8px 16px;
+    display: flex;
+    gap: 8px;
+  }
+  .chip {
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    border: 1px solid #C7C5D0;
+    background: transparent;
+    color: #46464F;
+    cursor: pointer;
+  }
+  .chip.active {
+    background: #DDE1FF;
+    border-color: #4052B5;
+    color: #4052B5;
+    font-weight: 500;
+  }
+
+  /* List */
+  .list-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 80px;
+  }
+
+  .item-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 0;
+    background: #F8F9FF;
+    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+
+  .item-row.done {
+    opacity: 0.55;
+  }
+
+  .divider {
+    height: 1px;
+    background: #E3E1EC;
+    margin: 0;
+  }
+
+  .checkbox {
+    width: 20px; height: 20px;
+    border: 2px solid #4052B5;
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, border-color 0.15s;
+    background: white;
+  }
+
+  .checkbox.checked {
+    background: #4052B5;
+    border-color: #4052B5;
+  }
+  .checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .item-text-block {
+    flex: 1;
+    padding: 0 8px;
+  }
+  .item-title {
+    font-size: 15px;
+    color: #1B1B21;
+    transition: color 0.3s, text-decoration 0.3s;
+  }
+  .item-title.done {
+    text-decoration: line-through;
+    color: #46464F;
+  }
+  .item-claimed {
+    font-size: 11px;
+    color: #4052B5;
+    margin-top: 1px;
+  }
+  .item-qty {
+    font-size: 11px;
+    color: #46464F;
+    margin-top: 1px;
+  }
+
+  .btn-take {
+    font-size: 13px;
+    color: #4052B5;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-weight: 500;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .btn-take:hover { background: #DDE1FF; }
+
+  /* Done section header */
+  .done-header {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+  }
+  .done-header.visible {
+    opacity: 1;
+    max-height: 40px;
+  }
+  .done-header-line {
+    flex: 1;
+    height: 1px;
+    background: #C7C5D0;
+  }
+  .done-header-text {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(70,70,79,0.7);
+    white-space: nowrap;
+  }
+
+  /* FAB */
+  .fab {
+    position: absolute;
+    bottom: 20px;
+    right: 16px;
+    width: 52px; height: 52px;
+    background: #DDE1FF;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    color: #4052B5;
+    box-shadow: 0 4px 12px rgba(64,82,181,0.25);
+  }
+
+  .phone-body {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Animation for items moving */
+  .items-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item-wrapper {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+  }
+
+  /* Reset button */
+  .reset-btn {
+    padding: 10px 20px;
+    background: #4052B5;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .reset-btn:hover { background: #3041A3; }
+
+  .hint {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    max-width: 320px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-wrapper">
+  <div class="label">До</div>
+  <div class="phone">
+    <div class="topbar">
+      <button class="topbar-back">←</button>
+      <div class="topbar-title">Список покупок</div>
+    </div>
+    <div class="chips">
+      <div class="chip active">Все</div>
+      <div class="chip">Мои</div>
+    </div>
+    <div class="phone-body">
+      <div class="list-content">
+        <div class="item-row">
+          <div class="checkbox"></div>
+          <div class="item-text-block">
+            <div class="item-title">Молоко</div>
+            <div class="item-qty">2 литра</div>
+          </div>
+          <button class="btn-take">Взять</button>
+        </div>
+        <div class="divider"></div>
+        <div class="item-row done">
+          <div class="checkbox checked"></div>
+          <div class="item-text-block">
+            <div class="item-title done">Хлеб</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="item-row">
+          <div class="checkbox"></div>
+          <div class="item-text-block">
+            <div class="item-title">Сыр</div>
+            <div class="item-claimed">→ Маша</div>
+          </div>
+          <button class="btn-take">Снять</button>
+        </div>
+        <div class="divider"></div>
+        <div class="item-row">
+          <div class="checkbox"></div>
+          <div class="item-text-block">
+            <div class="item-title">Яблоки</div>
+            <div class="item-qty">1 кг</div>
+          </div>
+          <button class="btn-take">Взять</button>
+        </div>
+        <div class="divider"></div>
+        <div class="item-row done">
+          <div class="checkbox checked"></div>
+          <div class="item-text-block">
+            <div class="item-title done">Масло</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+      </div>
+      <button class="fab">+</button>
+    </div>
+  </div>
+</div>
+
+<div class="phone-wrapper">
+  <div class="label">После (фича 025)</div>
+  <div class="phone" id="demo-phone">
+    <div class="topbar">
+      <button class="topbar-back">←</button>
+      <div class="topbar-title">Список покупок</div>
+    </div>
+    <div class="chips">
+      <div class="chip active">Все</div>
+      <div class="chip">Мои</div>
+    </div>
+    <div class="phone-body">
+      <div class="list-content" id="list-content">
+        <!-- Active items -->
+        <div id="item-milk" class="item-row">
+          <div class="checkbox" onclick="checkItem('item-milk', this)"></div>
+          <div class="item-text-block">
+            <div class="item-title" id="title-milk">Молоко</div>
+            <div class="item-qty">2 литра</div>
+          </div>
+          <button class="btn-take">Взять</button>
+        </div>
+        <div class="divider"></div>
+
+        <div id="item-cheese" class="item-row">
+          <div class="checkbox" onclick="checkItem('item-cheese', this)"></div>
+          <div class="item-text-block">
+            <div class="item-title" id="title-cheese">Сыр</div>
+            <div class="item-claimed">→ Маша</div>
+          </div>
+          <button class="btn-take">Снять</button>
+        </div>
+        <div class="divider"></div>
+
+        <div id="item-apple" class="item-row">
+          <div class="checkbox" onclick="checkItem('item-apple', this)"></div>
+          <div class="item-text-block">
+            <div class="item-title" id="title-apple">Яблоки</div>
+            <div class="item-qty">1 кг</div>
+          </div>
+          <button class="btn-take">Взять</button>
+        </div>
+        <div class="divider"></div>
+
+        <div id="item-eggs" class="item-row">
+          <div class="checkbox" onclick="checkItem('item-eggs', this)"></div>
+          <div class="item-text-block">
+            <div class="item-title" id="title-eggs">Яйца</div>
+            <div class="item-qty">10 шт</div>
+          </div>
+          <button class="btn-take">Взять</button>
+        </div>
+        <div class="divider"></div>
+
+        <!-- Done section header -->
+        <div class="done-header" id="done-header">
+          <div class="done-header-line"></div>
+          <div class="done-header-text" id="done-count-text">Выполнено · 0</div>
+          <div class="done-header-line"></div>
+        </div>
+
+        <!-- Done items go here -->
+        <div id="done-section"></div>
+      </div>
+      <button class="fab">+</button>
+    </div>
+  </div>
+
+  <button class="reset-btn" onclick="resetDemo()">↺ Сбросить</button>
+  <div class="hint">Нажимай на чекбокс — элемент плавно<br>уедет вниз с анимацией spring</div>
+</div>
+
+<script>
+const items = {
+  'item-milk':   { title: 'Молоко',  done: false },
+  'item-cheese': { title: 'Сыр',     done: false },
+  'item-apple':  { title: 'Яблоки',  done: false },
+  'item-eggs':   { title: 'Яйца',    done: false },
+};
+
+function checkItem(id, checkbox) {
+  const item = items[id];
+  if (!item) return;
+
+  item.done = !item.done;
+
+  const row = document.getElementById(id);
+  const title = document.getElementById('title-' + id.replace('item-', ''));
+  const btn = row.querySelector('.btn-take');
+
+  if (item.done) {
+    // Immediately update visual state
+    checkbox.classList.add('checked');
+    row.classList.add('done');
+    if (title) title.classList.add('done');
+    if (btn) btn.style.display = 'none';
+
+    // Move to done section after 350ms (spring delay feel)
+    setTimeout(() => {
+      moveToDoneSection(id, row);
+    }, 350);
+  } else {
+    // Move back to active section
+    checkbox.classList.remove('checked');
+    row.classList.remove('done');
+    if (title) title.classList.remove('done');
+    if (btn) btn.style.display = '';
+    moveToActiveSection(id, row);
+  }
+
+  updateDoneHeader();
+}
+
+function moveToDoneSection(id, row) {
+  const doneSection = document.getElementById('done-section');
+
+  // Find and remove next divider
+  const nextSibling = row.nextElementSibling;
+  if (nextSibling && nextSibling.classList.contains('divider')) {
+    nextSibling.remove();
+  } else {
+    const prevSibling = row.previousElementSibling;
+    if (prevSibling && prevSibling.classList.contains('divider')) {
+      prevSibling.remove();
+    }
+  }
+
+  // Move row + divider to done section
+  const divider = document.createElement('div');
+  divider.className = 'divider';
+
+  row.remove();
+
+  const wrapper = document.createElement('div');
+  wrapper.id = 'wrapper-' + id;
+  wrapper.appendChild(row);
+  wrapper.appendChild(divider);
+
+  doneSection.appendChild(wrapper);
+  updateDoneHeader();
+}
+
+function moveToActiveSection(id, row) {
+  const listContent = document.getElementById('list-content');
+  const doneHeader = document.getElementById('done-header');
+
+  const wrapper = document.getElementById('wrapper-' + id);
+  if (wrapper) {
+    wrapper.querySelector('.divider')?.remove();
+    wrapper.replaceWith(row);
+  }
+
+  // Insert before done-header
+  const divider = document.createElement('div');
+  divider.className = 'divider';
+
+  listContent.insertBefore(divider, doneHeader);
+  listContent.insertBefore(row, divider);
+
+  updateDoneHeader();
+}
+
+function updateDoneHeader() {
+  const doneCount = Object.values(items).filter(i => i.done).length;
+  const header = document.getElementById('done-header');
+  const countText = document.getElementById('done-count-text');
+
+  if (doneCount > 0) {
+    header.classList.add('visible');
+    countText.textContent = 'Выполнено · ' + doneCount;
+  } else {
+    header.classList.remove('visible');
+  }
+}
+
+function resetDemo() {
+  // Reset all items state
+  Object.keys(items).forEach(id => {
+    items[id].done = false;
+  });
+
+  // Rebuild list
+  const phone = document.getElementById('demo-phone');
+  const listContent = document.getElementById('list-content');
+
+  const itemsData = [
+    { id: 'item-milk',   title: 'Молоко',  qty: '2 литра',  claimed: null,  btnText: 'Взять' },
+    { id: 'item-cheese', title: 'Сыр',     qty: null,       claimed: '→ Маша', btnText: 'Снять' },
+    { id: 'item-apple',  title: 'Яблоки',  qty: '1 кг',    claimed: null,  btnText: 'Взять' },
+    { id: 'item-eggs',   title: 'Яйца',    qty: '10 шт',   claimed: null,  btnText: 'Взять' },
+  ];
+
+  listContent.innerHTML = itemsData.map((item, i) => `
+    <div id="${item.id}" class="item-row">
+      <div class="checkbox" onclick="checkItem('${item.id}', this)"></div>
+      <div class="item-text-block">
+        <div class="item-title" id="title-${item.id.replace('item-', '')}">${item.title}</div>
+        ${item.qty ? `<div class="item-qty">${item.qty}</div>` : ''}
+        ${item.claimed ? `<div class="item-claimed">${item.claimed}</div>` : ''}
+      </div>
+      <button class="btn-take">${item.btnText}</button>
+    </div>
+    <div class="divider"></div>
+  `).join('') + `
+    <div class="done-header" id="done-header">
+      <div class="done-header-line"></div>
+      <div class="done-header-text" id="done-count-text">Выполнено · 0</div>
+      <div class="done-header-line"></div>
+    </div>
+    <div id="done-section"></div>
+  `;
+}
+</script>
+</body>
+</html>
